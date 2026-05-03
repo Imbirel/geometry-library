@@ -1,0 +1,26 @@
+# Скомпилированный код
+dist/
+build/
+
+# Зависимости
+node_modules/
+
+# Логи и временные файлы
+npm-debug.log*
+*.log
+.turbo/
+.eslintcache
+
+# Тесты и покрытие
+coverage/
+.nyc_output
+
+# Настройки IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Окружение
+.env
+.env.local
