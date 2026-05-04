@@ -16,10 +16,15 @@
 ```ts
 import { ShapeFactory, Rectangle, Circle, Triangle } from 'geometry-library';
 
-// Создаём фабрику (предзарегистрированы circle, rectangle, triangle)
+// 1. Создаём фабрику
 const factory = new ShapeFactory();
 
-// Асинхронное создание
+// 2. Регистрируем нужные фигуры вручную
+factory.register('rectangle', Rectangle);
+factory.register('circle', Circle);
+factory.register('triangle', Triangle);
+
+// 3. Асинхронное создание
 const rect = await factory.create<Rectangle>('rectangle', 5, 10);
 const circ = await factory.create<Circle>('circle', 7);
 const tri  = await factory.create<Triangle>('triangle', 3, 4, 5);
@@ -42,7 +47,7 @@ factory.register('square', Square); // ваш класс Square
 const square = await factory.create('square', 10);
 ```
 
-При создании фабрика генерирует событие `shapecreated`, на которое можно подписаться:
+При создании фабрика генерирует событие `shapecreated`, на которое можно подписаться (ДО вызова создания):
 
 ```ts
 factory.addEventListener('shapecreated', (e) => {
@@ -72,10 +77,11 @@ const restored = await factory.createFromParameters(par);
 Методы `getArea()` и `getPerimeter()` возвращают `Promise<number>`. При первом вызове результат кэшируется и генерирует события `areacalculated` / `perimetercalculated`:
 
 ```ts
-const area = await rect.getArea();
 rect.addEventListener('areacalculated', (e) => {
   console.log(`Площадь: ${e.area}`);
 });
+
+const area = await rect.getArea();
 ```
 
 
