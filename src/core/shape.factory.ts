@@ -4,10 +4,6 @@ import { ShapeCreatedEvent } from './events';
 import { UnknownShapeTypeError } from '../errors/unknown-shape-type.error';
 import { ShapeAlreadyRegisteredError } from '../errors/shape-already-registered.error';
 
-import { Circle } from '../shapes/circle';
-import { Rectangle } from '../shapes/rectangle';
-import { Triangle } from '../shapes/triangle';
-
 /**
  * Асинхронная фабрика для создания экземпляров геометрических фигур.
  *
@@ -20,17 +16,6 @@ import { Triangle } from '../shapes/triangle';
  */
 export class ShapeFactory extends EventTarget {
   private readonly registry: Map<string, ShapeConstructor> = new Map();
-
-  /**
-   * Создаёт фабрику с предварительно зарегистрированными типами:
-   * `circle`, `rectangle`, `triangle`.
-   */
-  constructor() {
-    super();
-    this.register('circle', Circle);
-    this.register('rectangle', Rectangle);
-    this.register('triangle', Triangle);
-  }
 
   /**
    * Возвращает массив всех зарегистрированных типов фигур.
