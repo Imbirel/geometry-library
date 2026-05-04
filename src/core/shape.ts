@@ -31,20 +31,33 @@ export abstract class Shape<T extends ShapeParameters> extends EventTarget {
   #cachedArea: number | undefined;
   #cachedPerimeter: number | undefined;
 
+  #areaPromise: Promise<number> | undefined;
+  #perimeterPromise: Promise<number> | undefined;
+
   /**
    * Асинхронно вычисляет площадь фигуры.
    *
    * При первом вызове результат кэшируется и порождает событие {@link AreaCalculatedEvent}.
    * Повторные вызовы возвращают закэшированное значение.
+   * 
+   * Архитектура асинхронна для потенциального выноса расчетов в Web Workers.
    *
    * @returns Promise, разрешающийся значением площади.
    */
   public async getArea(): Promise<number> {
-    if (this.#cachedArea === undefined) {
-      this.#cachedArea = this.area;
-      this.dispatchEvent(new AreaCalculatedEvent(this.#cachedArea));
+    if (this.#cachedArea !== undefined) {
+      return this.#cachedArea;
     }
-    return this.#cachedArea;
+
+    if (!this.#areaPromise) {
+      this.#areaPromise = (async () => {
+        this.#cachedArea = this.area;
+        this.dispatchEvent(new AreaCalculatedEvent(this.#cachedArea));
+        return this.#cachedArea;
+      })();
+    }
+
+    return this.#areaPromise;
   }
 
   /**
@@ -53,14 +66,24 @@ export abstract class Shape<T extends ShapeParameters> extends EventTarget {
    * При первом вызове результат кэшируется и порождает событие {@link PerimeterCalculatedEvent}.
    * Повторные вызовы возвращают закэшированное значение.
    *
+   * Архитектура асинхронна для потенциального выноса расчетов в Web Workers.
+   *
    * @returns Promise, разрешающийся значением периметра.
    */
   public async getPerimeter(): Promise<number> {
-    if (this.#cachedPerimeter === undefined) {
-      this.#cachedPerimeter = this.perimeter;
-      this.dispatchEvent(new PerimeterCalculatedEvent(this.#cachedPerimeter));
+    if (this.#cachedPerimeter !== undefined) {
+      return this.#cachedPerimeter;
     }
-    return this.#cachedPerimeter;
+
+    if (!this.#perimeterPromise) {
+      this.#perimeterPromise = (async () => {
+        this.#cachedPerimeter = this.perimeter;
+        this.dispatchEvent(new PerimeterCalculatedEvent(this.#cachedPerimeter));
+        return this.#cachedPerimeter;
+      })();
+    }
+
+    return this.#perimeterPromise;
   }
 
   /**
@@ -98,5 +121,25 @@ export abstract class Shape<T extends ShapeParameters> extends EventTarget {
     options?: boolean | AddEventListenerOptions,
   ): void {
     super.addEventListener(type, callback, options);
+  }
+
+  override removeEventListener(
+    type: 'areacalculated',
+    callback: ((ev: AreaCalculatedEvent) => void) | EventListenerObject | null,
+    options?: boolean | EventListenerOptions,
+  ): void;
+
+  override removeEventListener(
+    type: 'perimetercalculated',
+    callback: ((ev: PerimeterCalculatedEvent) => void) | EventListenerObject | null,
+    options?: boolean | EventListenerOptions,
+  ): void;
+
+  override removeEventListener(
+    type: string,
+    callback: EventListenerOrEventListenerObject | null,
+    options?: boolean | EventListenerOptions,
+  ): void {
+    super.removeEventListener(type, callback, options);
   }
 }

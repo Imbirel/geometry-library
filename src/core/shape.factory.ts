@@ -119,4 +119,24 @@ export class ShapeFactory extends EventTarget {
   ): void {
     super.addEventListener(type, callback, options);
   }
+
+  /**
+   * Отписка от события `shapecreated`.
+   */
+  override removeEventListener(
+    type: 'shapecreated',
+    callback: ((ev: ShapeCreatedEvent) => void) | EventListenerObject | null,
+    options?: boolean | EventListenerOptions,
+  ): void;
+
+  /**
+   * Базовая реализация отписки, совместимая с {@link EventTarget}.
+   */
+  override removeEventListener(
+    type: string,
+    callback: EventListenerOrEventListenerObject | null,
+    options?: boolean | EventListenerOptions,
+  ): void {
+    super.removeEventListener(type, callback, options);
+  }
 }
