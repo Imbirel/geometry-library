@@ -55,6 +55,7 @@ export interface ShapeConstructor<T extends ShapeParameters = ShapeParameters> {
 }
 
 /**
- * Строковый литерал или произвольная строка для идентификации типа фигуры.
+ * Строковый литерал для базовых типов + поддержка любых строк для расширения.
+ * (string & {}) позволяет избежать поглощения литералов типом string.
  */
-export type ShapeType = 'rectangle' | 'circle' | 'triangle' | string;
+export type ShapeType = 'rectangle' | 'circle' | 'triangle' | (string & {});
