@@ -7,6 +7,5 @@ export * from './shapes/circle';
 export * from './shapes/rectangle';
 export * from './shapes/triangle';
 
-export * from './errors/invalid-shape-argument.error';
-export * from './errors/shape-already-registered.error';
-export * from './errors/unknown-shape-type.error';
+export * from './errors/base.error';
+export * from './errors/shape.errors';

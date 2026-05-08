@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Rectangle } from '../../src/shapes/rectangle';
-import { InvalidShapeArgumentError } from '../../src/errors/invalid-shape-argument.error';
+import { InvalidShapeArgumentError } from '../../src/errors/shape.errors';
 
 describe('Rectangle', () => {
   it('should create a rectangle with positive sides', () => {

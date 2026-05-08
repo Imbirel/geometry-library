@@ -1,8 +1,7 @@
 import { Shape } from './shape';
 import { ShapeConstructor, ShapeParameters, ShapeType } from './types';
 import { ShapeCreatedEvent } from './events';
-import { UnknownShapeTypeError } from '../errors/unknown-shape-type.error';
-import { ShapeAlreadyRegisteredError } from '../errors/shape-already-registered.error';
+import { ShapeAlreadyRegisteredError, UnknownShapeTypeError } from '../errors/shape.errors';
 
 /**
  * Асинхронная фабрика для создания экземпляров геометрических фигур.

@@ -8,6 +8,7 @@ geometry-library
 ├─ eslint.config.js
 ├─ package-lock.json
 ├─ package.json
+├─ project-structure.md
 ├─ README.md
 ├─ src
 │  ├─ core
@@ -25,6 +26,15 @@ geometry-library
 │     ├─ rectangle.ts
 │     └─ triangle.ts
 ├─ test
+│  ├─ core
+│  │  ├─ shape.factory.test.ts
+│  │  └─ shape.test.ts
+│  ├─ errors
+│  │  └─ errors.test.ts
+│  └─ shapes
+│     ├─ circle.test.ts
+│     ├─ rectangle.test.ts
+│     └─ triangle.test.ts
 └─ tsconfig.json
 
 ```

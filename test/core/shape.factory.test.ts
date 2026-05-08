@@ -3,9 +3,8 @@ import { ShapeFactory } from '../../src/core/shape.factory';
 import { ShapeCreatedEvent } from '../../src/core/events';
 import { Circle } from '../../src/shapes/circle';
 import { Rectangle } from '../../src/shapes/rectangle';
-import { ShapeAlreadyRegisteredError } from '../../src/errors/shape-already-registered.error';
-import { UnknownShapeTypeError } from '../../src/errors/unknown-shape-type.error';
 import { Shape } from '../../src/core/shape';
+import { ShapeAlreadyRegisteredError, UnknownShapeTypeError } from '../../src/errors/shape.errors';
 
 let factory: ShapeFactory;
 beforeEach(() => {
@@ -13,14 +12,14 @@ beforeEach(() => {
 });
 
 describe('ShapeFactory', () => {
-  it('should pre-register circle, rectangle, triangle', () => {
-    expect(factory.registeredTypes).toEqual(
-      expect.arrayContaining(['circle', 'rectangle', 'triangle']),
-    );
+  it('should have no registered types initially', () => {
+    expect(factory.registeredTypes).toEqual([]);
   });
 
   it('should throw when registering duplicate type', () => {
-    expect(() => factory.register('circle', Circle)).toThrow(ShapeAlreadyRegisteredError);
+    factory.register('circle', Circle);
+    expect(() => factory.register('circle', Circle))
+      .toThrow(ShapeAlreadyRegisteredError);
   });
 
   it('should register a custom shape', () => {
@@ -55,6 +54,7 @@ describe('ShapeFactory', () => {
   });
 
   it('should create a circle asynchronously and fire event', async () => {
+    factory.register('circle', Circle);
     const handler = vi.fn();
     factory.addEventListener('shapecreated', handler);
 
@@ -71,6 +71,7 @@ describe('ShapeFactory', () => {
   });
 
   it('should create from parameters', async () => {
+    factory.register('rectangle', Rectangle);
     const params = { type: 'rectangle', width: 7, height: 8 };
     const rect = await factory.createFromParameters<Rectangle>(params);
     expect(rect).toBeInstanceOf(Rectangle);

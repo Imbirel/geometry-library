@@ -1,6 +1,6 @@
 import { Shape } from '../core/shape';
 import { RectangleParameters } from '../core/types';
-import { InvalidShapeArgumentError } from '../errors/invalid-shape-argument.error';
+import { InvalidShapeArgumentError } from '../errors/shape.errors';
 
 /**
  * Представляет прямоугольник с заданными шириной и высотой.

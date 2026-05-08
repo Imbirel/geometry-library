@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Circle } from '../../src/shapes/circle';
-import { InvalidShapeArgumentError } from '../../src/errors/invalid-shape-argument.error';
+import { InvalidShapeArgumentError } from '../../src/errors/shape.errors';
 
 describe('Circle', () => {
   it('should create a circle with a positive radius', () => {

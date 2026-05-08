@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Triangle } from '../../src/shapes/triangle';
-import { InvalidShapeArgumentError } from '../../src/errors/invalid-shape-argument.error';
+import { InvalidShapeArgumentError } from '../../src/errors/shape.errors';
 
 describe('Triangle', () => {
   it('should create a triangle with valid sides', () => {

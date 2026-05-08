@@ -1,6 +1,6 @@
 import { Shape } from '../core/shape';
 import { TriangleParameters } from '../core/types';
-import { InvalidShapeArgumentError } from '../errors/invalid-shape-argument.error';
+import { InvalidShapeArgumentError } from '../errors/shape.errors';
 
 /**
  * Представляет треугольник с заданными длинами сторон.
